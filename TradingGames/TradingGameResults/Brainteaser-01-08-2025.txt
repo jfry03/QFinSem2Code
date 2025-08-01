@@ -1,0 +1,7 @@
+CK: 25
+SC: 15
+BK: 15
+David: 5
+BW: 5
+MV: 5
+LC: 5
