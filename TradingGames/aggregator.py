@@ -84,7 +84,9 @@ def update_readme(df):
 
 
 
-path = "TradingGameResults/"
+script_dir = os.path.dirname(os.path.abspath(__file__))
+path = os.path.join(script_dir, "TradingGameResults")
+
 csvs = os.listdir(path)
 
 liquidity_providers = ["JF", "KM"]
