@@ -66,10 +66,23 @@ def analyse_txt(path):
             name, pnl = line.split(':')
             name = name.strip()
             pnl = int(pnl.strip())
-            if name in names:
-                pnls[names[name]] = pnl
+            pnls[name] = pnl
 
     return pnls
+
+def update_readme(df):
+    md = "# PnL Summary\n\n"
+    md += "| Player | Total PnL |\n|--------|-----------|\n"
+    
+    for player, row in df.iterrows():
+        pnl = row["PnL"]
+        md += f"| {player} | {pnl:.2f} |\n"
+    
+    with open("../README.md", "w") as f:
+        f.write(md)
+
+
+
 
 path = "TradingGameResults/"
 csvs = os.listdir(path)
@@ -80,13 +93,16 @@ pnls = {}
 for file in csvs:
     if file.endswith(".xlsx"):   
         new_pnls = analyse_xlsx(path + file)
+        print(new_pnls)
         pnls = merge_pnls(pnls, new_pnls)
     if file.endswith("txt"):
         new_pnls = analyse_txt(path + file)
+        print(new_pnls)
         pnls = merge_pnls(pnls, new_pnls)
 
 df = pd.DataFrame.from_dict(pnls, orient='index', columns=['PnL']).sort_values(by='PnL', ascending=False)
 df.index = df.index.map(names)
 
-print(df)
-print(df.sum())
+update_readme(df)
+
+
