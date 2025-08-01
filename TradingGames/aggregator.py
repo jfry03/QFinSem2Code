@@ -81,11 +81,19 @@ def update_readme(df):
     with open("../README.md", "w") as f:
         f.write(md)
 
+def strict_map_index(index, mapping):
+    mapped = []
+    for k in index:
+        k_clean = k.strip()
+        if k_clean not in mapping:
+            raise KeyError(f"Key '{k}' (after strip: '{k_clean}') not found in mapping.")
+        mapped.append(mapping[k_clean])
+    return mapped
 
 
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
-path = os.path.join(script_dir, "TradingGameResults")
+path = os.path.join(script_dir, "TradingGameResults/")
 
 csvs = os.listdir(path)
 
@@ -103,7 +111,7 @@ for file in csvs:
         pnls = merge_pnls(pnls, new_pnls)
 
 df = pd.DataFrame.from_dict(pnls, orient='index', columns=['PnL']).sort_values(by='PnL', ascending=False)
-df.index = df.index.map(names)
+df.index = strict_map_index(df.index, names)
 
 update_readme(df)
 

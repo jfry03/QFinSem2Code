@@ -18,7 +18,7 @@
 | Cooper | -21.86 |
 | Stanley | -28.82 |
 | Wesley | -31.22 |
-| nan | -49.61 |
+| Nick | -49.61 |
 | Matthew | -51.02 |
 | Lewis | -67.67 |
 | Stefan | -85.77 |
