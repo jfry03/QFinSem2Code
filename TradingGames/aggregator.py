@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 
-names = {"SC": "Stefan", "BW": "Brandon", "LE": "Luke", "David": "David", "CK": "Cameron", "CH": "Cooper", "CO": "Chelsea", "DM": "Devdhar", "BM": "Ben", "BK": "Baxter", "AV": "Adriaan", "GB": "Grace", "JY": "Jayden", "LC": "Lewis", "MV": "Matthew", "NC": "Nick", "RC": "Rahul", "SA": "Stanley", "TB": "Theo", "WW": "Wesley"}
+names = {"SC": "Stefan", "TC": "Tyler", "BW": "Brandon", "LE": "Luke", "David": "David", "CK": "Cameron", "CH": "Cooper", "CO": "Chelsea", "DM": "Devdhar", "BM": "Ben", "BK": "Baxter", "AV": "Adriaan", "GB": "Grace", "JY": "Jayden", "LC": "Lewis", "MV": "Matthew", "NC": "Nick", "RC": "Rahul", "SA": "Stanley", "TB": "Theo", "WW": "Wesley"}
 
 def analyse_xlsx(file_name, liquidity_providers=None):
     sheets = pd.read_excel(file_name, sheet_name=None)
@@ -17,6 +17,7 @@ def analyse_xlsx(file_name, liquidity_providers=None):
     return pnls
 
 def analyse_csv(df):
+    print(df)
     settlement = df["Solution"].iloc[0]
     df = df.drop(columns=["Solution"])
     print(df.columns)
@@ -97,11 +98,12 @@ path = os.path.join(script_dir, "TradingGameResults/")
 
 csvs = os.listdir(path)
 
-liquidity_providers = ["JF", "KM"]
+liquidity_providers = ["JF", "KM", "CB", "CC"]
 
 pnls = {}
 for file in csvs:
     if file.endswith(".xlsx"):   
+        print(file)
         new_pnls = analyse_xlsx(path + file)
         print(new_pnls)
         pnls = merge_pnls(pnls, new_pnls)
